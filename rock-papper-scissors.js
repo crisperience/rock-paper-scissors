@@ -35,9 +35,18 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+while (humanScore < 5 && computerScore < 5) {
+    const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
 
 playRound(humanSelection, computerSelection);
 
 console.log(`Human Score: ${humanScore}, Computer Score: ${computerScore}`);
+
+}
+
+if (humanScore === 5) {
+    console.log("Congratz! You won the game!");
+} else {
+    console.log("AI is taking over the world!");
+}
