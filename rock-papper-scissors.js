@@ -9,16 +9,35 @@ function getComputerChoice() {
 
 function getHumanChoice() {
     let choice = prompt("Choose Rock, Paper, or Scissors:");
-    choice = choice.toLowerCase();
-    if (choice === "rock" || choice === "paper" || choice === "scissors") {
-        return choice;
+    if (choice === null) {
+        console.log("No input provided, please try again.");
+        return getHumanChoice(); // Ask again
+    }
+    return choice;
+}
+
+function playRound(humanChoice, computerChoice) {
+    humanChoice = humanChoice.toLowerCase();
+
+    if (humanChoice === computerChoice.toLowerCase()) {
+        console.log("It's a tie!");
+    }
+    else if (
+        (humanChoice === "rock" && computerChoice.toLowerCase() === "scissors") ||
+        (humanChoice === "paper" && computerChoice.toLowerCase() === "rock") ||
+        (humanChoice === "scissors" && computerChoice.toLowerCase() === "paper")
+    ) {
+        console.log("You win!");
+        humanScore++;
     } else {
-        console.log("Invalid choice! Please choose Rock, Paper, or Scissors.")
-        return getHumanChoice();
+        console.log("You lose!");
+        computerScore++;
     }
 }
 
+const humanSelection = getHumanChoice();
+const computerSelection = getComputerChoice();
 
+playRound(humanSelection, computerSelection);
 
-
-
+console.log(`Human Score: ${humanScore}, Computer Score: ${computerScore}`);
