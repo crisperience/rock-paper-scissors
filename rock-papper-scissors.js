@@ -11,7 +11,7 @@ function getHumanChoice() {
     let choice = prompt("Choose Rock, Paper, or Scissors:");
     if (choice === null) {
         console.log("No input provided, please try again.");
-        return getHumanChoice(); // Ask again
+        return getHumanChoice();
     }
     return choice;
 }
