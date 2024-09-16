@@ -2,51 +2,56 @@ let humanScore = 0;
 let computerScore = 0;
 
 function getComputerChoice() {
-    const choices = ["Rock", "Paper", "Scissors"];
+    const choices = ["rock", "paper", "scissors"];
     const computerChoice = Math.floor(Math.random() * choices.length);
     return choices[computerChoice];
 }
 
-function getHumanChoice() {
-    let choice = prompt("Choose Rock, Paper, or Scissors:");
-    if (choice === null) {
-        console.log("No input provided, please try again.");
-        return getHumanChoice();
-    }
-    return choice;
-}
-
 function playRound(humanChoice, computerChoice) {
-    humanChoice = humanChoice.toLowerCase();
+    const resultsDiv = document.getElementById("results");
+    const scoreDiv = document.getElementById("score");
 
-    if (humanChoice === computerChoice.toLowerCase()) {
-        console.log("It's a tie!");
-    }
-    else if (
-        (humanChoice === "rock" && computerChoice.toLowerCase() === "scissors") ||
-        (humanChoice === "paper" && computerChoice.toLowerCase() === "rock") ||
-        (humanChoice === "scissors" && computerChoice.toLowerCase() === "paper")
+    if (humanChoice === computerChoice) {
+        resultsDiv.textContent = "It's a tie!";
+    } else if (
+        (humanChoice === "rock" && computerChoice === "scissors") ||
+        (humanChoice === "paper" && computerChoice === "rock") ||
+        (humanChoice === "scissors" && computerChoice === "paper")
     ) {
-        console.log("You win!");
+        resultsDiv.textContent = `You win! ${humanChoice} beats ${computerChoice}`;
         humanScore++;
     } else {
-        console.log("You lose!");
+        resultsDiv.textContent = `You lose! ${computerChoice} beats ${humanChoice}`;
         computerScore++;
+    }
+
+    // Update the score inside the playRound function
+    scoreDiv.textContent = `Human Score: ${humanScore}, Computer Score: ${computerScore}`;
+
+    // Check if either player has reached 5 points
+    if (humanScore === 5) {
+        resultsDiv.textContent = "Congratz! You won the game!";
+        disableButtons();
+    } else if (computerScore === 5) {
+        resultsDiv.textContent = "AI is taking over the world!";
+        disableButtons();
     }
 }
 
-while (humanScore < 5 && computerScore < 5) {
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
-
-playRound(humanSelection, computerSelection);
-
-console.log(`Human Score: ${humanScore}, Computer Score: ${computerScore}`);
-
+function disableButtons() {
+    document.getElementById("rock").disabled = true;
+    document.getElementById("paper").disabled = true;
+    document.getElementById("scissors").disabled = true;
 }
 
-if (humanScore === 5) {
-    console.log("Congratz! You won the game!");
-} else {
-    console.log("AI is taking over the world!");
-}
+document.getElementById("rock").addEventListener("click", () => {
+    playRound("rock", getComputerChoice());
+});
+
+document.getElementById("paper").addEventListener("click", () => {
+    playRound("paper", getComputerChoice());
+});
+
+document.getElementById("scissors").addEventListener("click", () => {
+    playRound("scissors", getComputerChoice());
+});
